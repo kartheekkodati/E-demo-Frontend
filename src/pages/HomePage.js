@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Container, Row, Col, Form, Card, Button, Badge } from 'react-bootstrap';
+import { CartContext } from '../contexts/CartContext';
 
 // ProductCard component with fallback images
 const ProductCard = ({ product }) => {
   const [imageError, setImageError] = useState(false);
+  const { addToCart } = useContext(CartContext);
 
   const handleImageError = () => {
     setImageError(true);
+  };
+
+  const handleAddToCart = () => {
+    addToCart(product);
   };
 
   const fallbackImage = `https://via.placeholder.com/300x200/6c757d/ffffff?text=${encodeURIComponent(product.name.substring(0, 15))}`;
@@ -43,6 +49,7 @@ const ProductCard = ({ product }) => {
             variant={product.stock > 0 ? "primary" : "secondary"} 
             disabled={product.stock === 0}
             className="w-100"
+            onClick={handleAddToCart}
           >
             {product.stock > 0 ? 'Add to Cart' : 'Out of Stock'}
           </Button>
@@ -91,7 +98,7 @@ const HomePage = () => {
       description: "50mm prime lens for professional photography",
       price: 599.99,
       category: "Photography",
-      image: "https://images.unsplash.com/photo-1606983340126-99ab4feaa64a?w=300&h=200&fit=crop",
+      image: "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6536/6536910_rd.jpg;maxHeight=1920;maxWidth=900?format=webp",
       stock: 8
     },
     {
